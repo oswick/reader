@@ -19,8 +19,7 @@ class PdfViewScreen extends StatelessWidget {
           title,
           overflow: TextOverflow.ellipsis,
         ),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        backgroundColor:Theme.of(context).colorScheme.surface,
       ),
       body: PDFView(
         filePath: path,

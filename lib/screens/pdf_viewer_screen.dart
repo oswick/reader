@@ -32,7 +32,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
     try {
       // Solicitar permisos según la versión de Android
       bool hasPermission = await _permissionService.requestStoragePermissions();
-      
+
       if (hasPermission) {
         setState(() {
           _statusMessage = 'Buscando archivos PDF...';
@@ -40,7 +40,8 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
         await _getPdfFiles();
       } else {
         setState(() {
-          _statusMessage = 'Permisos denegados. No se pueden buscar archivos PDF.';
+          _statusMessage =
+              'Permisos denegados. No se pueden buscar archivos PDF.';
           _isLoading = false;
         });
       }
@@ -59,9 +60,9 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
       setState(() {
         _pdfFiles = pdfFiles;
         _isLoading = false;
-        _statusMessage = pdfFiles.isEmpty 
-          ? 'No se encontraron archivos PDF' 
-          : 'Se encontraron ${pdfFiles.length} archivos PDF';
+        _statusMessage = pdfFiles.isEmpty
+            ? 'No se encontraron archivos PDF'
+            : 'Se encontraron ${pdfFiles.length} archivos PDF';
       });
     } catch (e) {
       setState(() {
@@ -99,30 +100,19 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
       appBar: AppBar(
         title: Text('Visor de PDF'),
         backgroundColor: Theme.of(context).colorScheme.surface,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: _onRefresh,
-          ),
-        ],
+        actions: [IconButton(icon: Icon(Icons.refresh), onPressed: _onRefresh)],
       ),
       body: _isLoading
           ? LoadingWidget(message: _statusMessage)
           : _pdfFiles.isEmpty
-              ? EmptyStateWidget(
-                  message: _statusMessage,
-                  onRetry: _onRefresh,
-                )
-              : ListView.builder(
-                  itemCount: _pdfFiles.length,
-                  itemBuilder: (context, index) {
-                    final file = _pdfFiles[index];
-                    return PdfListItem(
-                      file: file,
-                      onTap: () => _onPdfTap(file),
-                    );
-                  },
-                ),
+          ? EmptyStateWidget(message: _statusMessage, onRetry: _onRefresh)
+          : ListView.builder(
+              itemCount: _pdfFiles.length,
+              itemBuilder: (context, index) {
+                final file = _pdfFiles[index];
+                return PdfListItem(file: file, onTap: () => _onPdfTap(file));
+              },
+            ),
     );
   }
 }

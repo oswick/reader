@@ -1,3 +1,4 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'screens/pdf_viewer_screen.dart';
 
@@ -10,17 +11,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'PDF Viewer',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData.dark(
-        useMaterial3: true,
-      ),
-      themeMode: ThemeMode.system,
-      home: PdfViewerScreen(),
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        return MaterialApp(
+          title: 'Pdf View',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            useMaterial3: true,
+            useSystemColors: true,
+            brightness: Brightness.light,
+            colorScheme: lightDynamic,
+          ),
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            useSystemColors: true,
+            brightness: Brightness.dark,
+            colorScheme: darkDynamic,
+          ),
+          themeMode: ThemeMode.system,
+          home: PdfViewerScreen(),
+        );
+      },
     );
   }
 }
